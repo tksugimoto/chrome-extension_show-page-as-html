@@ -1,0 +1,22 @@
+{
+	"name": "HTMLとして表示",
+	"version": "0.1",
+	"manifest_version": 2,
+
+	"permissions": [
+		"contextMenus",
+		"webRequest",
+		"webRequestBlocking"
+	],
+	"optional_permissions": [
+		"http://*/",
+		"https://*/"
+	],
+
+	"background": {
+		"persistent": true,
+		"scripts": [
+			"background.js"
+		]
+	}
+}
