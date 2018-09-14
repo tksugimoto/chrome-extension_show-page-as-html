@@ -60,9 +60,9 @@ const callback = (details) => {
 };
 const filter = {
 	urls: [
-		'*://*/*.html',
-		'*://*/*.css',
-		'*://*/*.js',
+		'*://*/*.html*',
+		'*://*/*.css*',
+		'*://*/*.js*',
 	],
 };
 const opt_extraInfoSpec = [
