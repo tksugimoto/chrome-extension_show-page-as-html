@@ -11,9 +11,10 @@ chrome.contextMenus.create({
 		}, granted => {
 			if (granted) {
 				startListenerIfNeeded();
-				targetTabs[tabId] = {
+				if (!targetTabs[tabId]) targetTabs[tabId] = [];
+				targetTabs[tabId].push({
 					url: tab.url,
-				};
+				});
 				chrome.tabs.reload(tabId);
 			}
 		});
@@ -29,7 +30,7 @@ const isTargetRequest = (details, ext) => {
 	const targetTab = targetTabs[details.tabId];
 	if (!targetTab) return false;
 	if (ext === 'html') {
-		return targetTab.url === details.url;
+		return targetTab.some(tab => tab.url === details.url);
 	} else {
 		return true;
 	}
