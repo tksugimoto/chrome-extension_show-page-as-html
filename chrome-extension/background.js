@@ -13,7 +13,7 @@ chrome.contextMenus.create({
 				startListenerIfNeeded();
 				if (!targetTabs[tabId]) targetTabs[tabId] = [];
 				targetTabs[tabId].push({
-					url: tab.url,
+					url: new URL(tab.url),
 				});
 				chrome.tabs.reload(tabId);
 			}
@@ -30,7 +30,12 @@ const isTargetRequest = (details, ext) => {
 	const targetTab = targetTabs[details.tabId];
 	if (!targetTab) return false;
 	if (ext === 'html') {
-		return targetTab.some(tab => tab.url === details.url);
+		// hashの違いを無視するために、 originとpathで比較する
+		const {
+			origin,
+			pathname,
+		} = new URL(details.url);
+		return targetTab.some(tab => tab.url.origin === origin && tab.url.pathname === pathname);
 	} else {
 		return true;
 	}
